@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translate</title>
+    <style>
+        /* Reset some default styles */
+        body, h1, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        header {
+            background-color: #333; /* Background color for the header */
+            color: #fff; /* Text color for the header */
+            padding: 10px 0; /* Padding at the top and bottom of the header */
+            text-align: center; /* Center-align the content */
+        }
+
+        /* Style for the logo */
+        .logo {
+            font-size: 24px; /* Font size for the logo */
+            font-weight: bold; /* Bold font for the logo */
+        }
+
+        /* Style for the navigation menu */
+        nav {
+            margin-top: 10px; /* Spacing between the logo and the navigation menu */
+        }
+
+        nav a {
+            color: #fff; /* Text color for the links */
+            text-decoration: none; /* Remove underline from links */
+            margin: 0 10px; /* Spacing between the links */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .word_text {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+        .button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 800px;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+        p {
+            text-align: center
+        }
+    </style>
+</head>
+<body>
+    {% comment %} <header>
+        <h1>mamad</h1>
+    </header> {% endcomment %}
+    <header>
+        <div class="logo">Translate App</div>
+        <nav>
+            {% if user.is_authenticated %}
+                <a href="{% url "logout" %}">logout</a>
+                <a href="{% url "saved" %}">Saved words</a>
+            {% else %}
+                <a href="{% url "login" %}">login</a>
+            {% endif %}
+        </nav>
+    </header>
+    
+    <div class="container">
+        <form id="translationForm" action="" method="post">
+            {% csrf_token %}
+            <label>Source Language:</label>
+            {{form.lan1}}
+
+            <label>Target Language:</label>
+            {{form.lan2}}
+
+            <label>Text to Translate:</label>
+            {{form.word}}
+
+            <button type="submit">Translate</button>
+            
+        </form>
+
+        <div id="translationResult">
+            <p>{{result}}</p>
+        </div>
+        
+    </div>
+    {% if result %}
+        {% if user.is_authenticated %}
+            <a href="{% url "save" %}" class="button">save</a>
+        {% else %}
+            <a href="{% url "login" %}" class="button">save</a>
+        {% endif %}
+    {%endif%}
+</body>
+</html>
